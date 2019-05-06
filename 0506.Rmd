@@ -8,8 +8,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-```{r}
+#1
+```{r include=FALSE}
 library(tidyverse)
 library(lubridate)
 
@@ -79,7 +79,7 @@ bike_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
    mutate(total.price = price * quantity) %>%
     
     # Reorganize
-    select(-...1, -location) %>%
+    select(-1, -location) %>%
     select(-ends_with(".id")) %>%
     
     bind_cols(bike_orderlines_joined_tbl %>% select(order.id)) %>%
@@ -183,7 +183,16 @@ p<-sales_by_year_cat_2_tbl %>%
 p
 ```
 
+#2
 ```{r}
+library(data.table)
+m.price=read.table("c:/hw0506/HW0506/2010-2018price.txt")
+m.price<-m.price[,-2]
+colnames(m.price)<-c("id", "","", "date", "close")
+head(m.price)
+mprice.reorder = dcast(m.price,date~id)
+dim(mprice.reorder)
+write_rds(m.price,"2010-2018price.rds")
 ```
 
 ```{r}

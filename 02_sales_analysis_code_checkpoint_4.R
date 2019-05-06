@@ -26,7 +26,7 @@ library(writexl)
 
 ?read_excel()
 
-bikes_tbl <- read_excel("bikes.xlsx")
+bikes_tbl <- read_excel(path = "bikes.xlsx")
 
 bikeshops_tbl <- read_excel("bikeshops.xlsx")
 
@@ -82,7 +82,7 @@ bike_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
    mutate(total.price = price * quantity) %>%
     
     # Reorganize
-    select(-...1, -location) %>%
+    select(-1, -location) %>%
     select(-ends_with(".id")) %>%
     
     bind_cols(bike_orderlines_joined_tbl %>% select(order.id)) %>%
@@ -202,11 +202,13 @@ dev.off()
 #---------------------------------------------------------------------------------------
 #install.packages("data.table")
 library(data.table)
-m.price=read.table("D:/hw0506/HW0506/price2010-2018.txt",fileEncoding = 'UTF-8')
+m.price=read.table("c:/hw0506/HW0506/2010-2018price.txt")
 m.price<-m.price[,-2]
-colnames(m.price)<-c("id", "data", "close")
-
-
+colnames(m.price)<-c("id","","", "date", "close")
+head(m.price)
+mprice.reorder = dcast(m.price,date~id)
+dim(mprice.reorder)
+write_rds(m.price, "2010-2018price.rds")
 
 #---------------------------------------------------------------------------------------
 # 7.0 Writing Files ----
